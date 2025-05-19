@@ -7,7 +7,7 @@ class UserService {
   // URL của API server - thay đổi nếu cần
   // Sử dụng địa chỉ IP thực của máy tính thay vì localhost
   // Nếu bạn đang sử dụng iOS simulator, "localhost" sẽ không hoạt động
-  final String _baseUrl = 'http://127.0.0.1:3000/api'; // Sử dụng localhost/127.0.0.1 cho iOS simulator
+  final String _baseUrl = 'https://f32f-171-251-30-227.ngrok-free.app/api'; // Sử dụng localhost/127.0.0.1 cho iOS simulator
 
   // Đăng ký người dùng mới
   Future<User> register(String fullName, String phone, String email, String password) async {

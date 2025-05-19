@@ -638,7 +638,7 @@ class CinemaListScreen extends StatelessWidget {
 Future<List<Cinema>?> fetchCinemas(String city) async {
   try {
     final response = await http.get(
-      Uri.parse('http://localhost:3000/api/cinemas?city=$city'),
+      Uri.parse('https://f32f-171-251-30-227.ngrok-free.app/api/cinemas?city=$city'),
     );
 
     if (response.statusCode == 200) {
