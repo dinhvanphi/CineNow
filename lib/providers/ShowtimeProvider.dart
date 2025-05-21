@@ -32,7 +32,7 @@ class ShowtimeProvider extends ChangeNotifier {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://f32f-171-251-30-227.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=${movieProvider.selectedMovieId}'
+          'https://67c7-171-251-30-227.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=${movieProvider.selectedMovieId}'
         )
       );
 
@@ -70,7 +70,7 @@ class ShowtimeProvider extends ChangeNotifier {
 
       final response = await http.get(
         Uri.parse(
-          'https://f32f-171-251-30-227.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=$movieId'
+          'https://67c7-171-251-30-227.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=$movieId'
         )
       );
 
