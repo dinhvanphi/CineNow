@@ -13,7 +13,7 @@ class ComboService {
       developer.log("Fetching all combos from API");
       
       final response = await http.get(
-        Uri.parse('https://67c7-171-251-30-227.ngrok-free.app/api/combos'),
+        Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/combos'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -42,7 +42,7 @@ class ComboService {
       developer.log("Fetching combos for category: $category");
       
       final response = await http.get(
-        Uri.parse('https://67c7-171-251-30-227.ngrok-free.app/api/combos/$category'),
+        Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/combos/$category'),
         headers: {'Content-Type': 'application/json'},
       );
 

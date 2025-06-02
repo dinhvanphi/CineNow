@@ -33,7 +33,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       final cinemaId = Provider.of<CinemaProvider>(context, listen: false).cinemaId;
       if (cinemaId != null) {
-        final response = await http.get(Uri.parse('https://67c7-171-251-30-227.ngrok-free.app/api/cinemas/$cinemaId'));
+        final response = await http.get(Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/cinemas/$cinemaId'));
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           setState(() {
@@ -51,7 +51,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       final movieId = Provider.of<MovieProvider>(context, listen: false).selectedMovieId;
       if (movieId != null) {
-        final response = await http.get(Uri.parse('https://67c7-171-251-30-227.ngrok-free.app/api/movies/$movieId'));
+        final response = await http.get(Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/movies/$movieId'));
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           setState(() {
@@ -68,7 +68,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       int? cinemaId = Provider.of<CinemaProvider>(context, listen: false).cinemaId;
       if (cinemaId != null) {
-        final response = await http.get(Uri.parse('https://67c7-171-251-30-227.ngrok-free.app/api/rooms/$cinemaId'));
+        final response = await http.get(Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/rooms/$cinemaId'));
         if (response.statusCode == 200) {
           setState(() {
             rooms = jsonDecode(response.body);

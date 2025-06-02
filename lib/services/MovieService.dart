@@ -5,7 +5,7 @@ import '../models/Movie.dart';
 class MovieService {
   // URL API lấy từ server, thay đổi IP tùy theo môi trường
   // Thay thế bằng IP máy chủ của bạn
-  final String baseUrl = 'https://67c7-171-251-30-227.ngrok-free.app/api';
+  final String baseUrl = 'https://d623-116-105-212-66.ngrok-free.app/api';
 
   // Lấy danh sách phim đang chiếu
   Future<List<Movie>> getNowShowingMovies() async {
