@@ -4,7 +4,7 @@ import '../models/Room.dart';
 
 class RoomService {
   static Future<List<Room>> fetchRooms(int cinemaId) async {
-    final response = await http.get(Uri.parse('https://d623-116-105-212-66.ngrok-free.app/api/rooms/$cinemaId'));
+    final response = await http.get(Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/rooms/$cinemaId'));
 
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
