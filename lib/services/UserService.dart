@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:cinenow/config/AppConfig.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/User.dart';
 
@@ -7,7 +8,7 @@ class UserService {
   // URL của API server - thay đổi nếu cần
   // Sử dụng địa chỉ IP thực của máy tính thay vì localhost
   // Nếu bạn đang sử dụng iOS simulator, "localhost" sẽ không hoạt động
-  final String _baseUrl = 'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api'; // Sử dụng localhost/127.0.0.1 cho iOS simulator
+  final String _baseUrl = '${AppConfig.apiBaseUrl}/api'; // Sử dụng localhost/127.0.0.1 cho iOS simulator
 
   // Đăng ký người dùng mới
   Future<User> register(String fullName, String phone, String email, String password) async {

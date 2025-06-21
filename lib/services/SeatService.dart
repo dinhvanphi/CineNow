@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cinenow/config/AppConfig.dart';
 import 'package:http/http.dart' as http;
 import '../constants/api_constants.dart';
 import '../models/Seat.dart';
@@ -15,7 +16,7 @@ class SeatService {
       developer.log("Fetching seats for showtime ID: $showtimeId");
       
       final response = await http.get(
-        Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seats/showtime/$showtimeId'),
+        Uri.parse('${AppConfig.apiBaseUrl}/api/seats/showtime/$showtimeId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -74,7 +75,7 @@ class SeatService {
   Future<SeatPrice> getSeatPrice(int priceId) async {
     try {
       final response = await http.get(
-        Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seat-prices/$priceId'),
+        Uri.parse('${AppConfig.apiBaseUrl}/api/seat-prices/$priceId'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -93,7 +94,7 @@ class SeatService {
   Future<List<SeatPrice>> getAllSeatPrices() async {
     try {
       final response = await http.get(
-        Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seat-prices'),
+        Uri.parse('${AppConfig.apiBaseUrl}/api/seat-prices'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -116,7 +117,7 @@ class SeatService {
   Future<Map<String, dynamic>> getSeatPriceById(int seatId) async {
     try {
       developer.log("Fetching price for seat ID: $seatId");
-      final String apiUrl = 'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seats/$seatId/price';
+      final String apiUrl = '${AppConfig.apiBaseUrl}/api/seats/$seatId/price';
       developer.log("API URL: $apiUrl");
       
       final response = await http.get(
@@ -164,7 +165,7 @@ class SeatService {
       developer.log("Seat IDs: $seatIds");
       
       // Đổi đường dẫn API để khớp với server
-      final String apiUrl = 'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seats/showtime/$showtimeId/lock';
+      final String apiUrl = '${AppConfig.apiBaseUrl}/api/seats/showtime/$showtimeId/lock';
       developer.log("API URL: $apiUrl");
       
       final response = await http.post(
@@ -199,7 +200,7 @@ class SeatService {
       developer.log("Seat IDs: $seatIds");
       
       // Đổi đường dẫn API để khớp với server
-      final String apiUrl = 'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/seats/showtime/$showtimeId/unlock';
+      final String apiUrl = '${AppConfig.apiBaseUrl}/api/seats/showtime/$showtimeId/unlock';
       developer.log("API URL: $apiUrl");
       
       final response = await http.post(

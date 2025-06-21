@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cinenow/config/AppConfig.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:cinenow/providers/CinemaProvider.dart';
@@ -32,7 +33,7 @@ class ShowtimeProvider extends ChangeNotifier {
     try {
       final response = await http.get(
         Uri.parse(
-          'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=${movieProvider.selectedMovieId}'
+          '${AppConfig.apiBaseUrl}/api/showtimes?room_id=${roomProvider.roomId}&movie_id=${movieProvider.selectedMovieId}'
         )
       );
 
@@ -70,7 +71,7 @@ class ShowtimeProvider extends ChangeNotifier {
 
       final response = await http.get(
         Uri.parse(
-          'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/showtimes?room_id=${roomProvider.roomId}&movie_id=$movieId'
+          '${AppConfig.apiBaseUrl}/api/showtimes?room_id=${roomProvider.roomId}&movie_id=$movieId'
         )
       );
 

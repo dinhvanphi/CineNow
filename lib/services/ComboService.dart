@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cinenow/config/AppConfig.dart';
 import 'package:http/http.dart' as http;
 import '../constants/api_constants.dart';
 import '../models/Combo.dart';
@@ -13,7 +14,7 @@ class ComboService {
       developer.log("Fetching all combos from API");
       
       final response = await http.get(
-        Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/combos'),
+        Uri.parse('${AppConfig.apiBaseUrl}/api/combos'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -42,7 +43,7 @@ class ComboService {
       developer.log("Fetching combos for category: $category");
       
       final response = await http.get(
-        Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/combos/$category'),
+        Uri.parse('${AppConfig.apiBaseUrl}/api/combos/$category'),
         headers: {'Content-Type': 'application/json'},
       );
 

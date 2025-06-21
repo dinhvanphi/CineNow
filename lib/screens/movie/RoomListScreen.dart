@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:cinenow/config/AppConfig.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:cinenow/providers/CinemaProvider.dart';
@@ -33,7 +34,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       final cinemaId = Provider.of<CinemaProvider>(context, listen: false).cinemaId;
       if (cinemaId != null) {
-        final response = await http.get(Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/cinemas/$cinemaId'));
+        final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/api/cinemas/$cinemaId'));
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           setState(() {
@@ -51,7 +52,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       final movieId = Provider.of<MovieProvider>(context, listen: false).selectedMovieId;
       if (movieId != null) {
-        final response = await http.get(Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/movies/$movieId'));
+        final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/api/movies/$movieId'));
         if (response.statusCode == 200) {
           final data = jsonDecode(response.body);
           setState(() {
@@ -68,7 +69,7 @@ class _RoomListScreenState extends State<RoomListScreen> {
     try {
       int? cinemaId = Provider.of<CinemaProvider>(context, listen: false).cinemaId;
       if (cinemaId != null) {
-        final response = await http.get(Uri.parse('https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api/rooms/$cinemaId'));
+        final response = await http.get(Uri.parse('${AppConfig.apiBaseUrl}/api/rooms/$cinemaId'));
         if (response.statusCode == 200) {
           setState(() {
             rooms = jsonDecode(response.body);

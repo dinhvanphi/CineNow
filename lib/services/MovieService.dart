@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:cinenow/config/AppConfig.dart';
 import '../models/Movie.dart';
 
 class MovieService {
   // URL API lấy từ server, thay đổi IP tùy theo môi trường
   // Thay thế bằng IP máy chủ của bạn
-  final String baseUrl = 'https://ee39-2a09-bac5-d45c-101e-00-19b-9.ngrok-free.app/api';
+  final String baseUrl = '${AppConfig.apiBaseUrl}/api';
 
   // Lấy danh sách phim đang chiếu
   Future<List<Movie>> getNowShowingMovies() async {

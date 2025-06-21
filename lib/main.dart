@@ -51,13 +51,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _initDeepLinkHandling() async {
-    // Trong phiên bản demo/học tập, chúng ta sẽ giả lập việc xử lý deep link
-    // thay vì dùng getInitialLink() và uriLinkStream, để tránh phụ thuộc vào
-    // url_launcher_platform_interface và tránh lỗi khi build
-    
-    // Bạn có thể thử xử lý payment result sau khi thanh toán thủ công bằng cách:
-    // 1. Tạo một nút "Giả lập kết quả thanh toán" trong màn hình thanh toán
-    // 2. Khi nhấn, gọi trực tiếp _handleDeepLink với URL mô phỏng
+
     
     print('Khởi tạo xử lý deep link');
   }
