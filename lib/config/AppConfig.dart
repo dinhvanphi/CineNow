@@ -7,18 +7,18 @@ class AppConfig {
     if (kDebugMode) {
       if (Platform.isAndroid) {
         // Sử dụng ngrok URL cho thiết bị Android khi debug
-        return 'https://54101ce26d00.ngrok-free.app';
+        return 'https://c6871407688b.ngrok-free.app';
       } else if (Platform.isIOS) {
         // Sử dụng ngrok URL cho thiết bị iOS khi debug
-        return 'https://54101ce26d00.ngrok-free.app';
+        return 'https://c6871407688b.ngrok-free.app';
       }
     }
     // Đường dẫn production hoặc debug trên thiết bị thật
-    return 'https://54101ce26d00.ngrok-free.app';
+    return 'https://c6871407688b.ngrok-free.app';
   }
   
   // URL thanh toán VNPay
-  static const String vnpayApiUrl = 'https://54101ce26d00.ngrok-free.app';
+  static const String vnpayApiUrl = 'https://c6871407688b.ngrok-free.app';
   static const String vnpayReturnUrl = vnpayApiUrl + '/api/payment/vnpay/return';
 
   // API Endpoints
