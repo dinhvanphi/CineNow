@@ -14,7 +14,7 @@ class AppConfig {
       }
     }
     // Đường dẫn production hoặc debug trên thiết bị thật
-    return 'https://52b9e04a5ef9.ngrok-free.app';
+    return 'https://95a487b3043c.ngrok-free.app';
   }
   
   // URL thanh toán VNPay
