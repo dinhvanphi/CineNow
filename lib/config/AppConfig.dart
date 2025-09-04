@@ -10,7 +10,7 @@ class AppConfig {
         return 'https://52b9e04a5ef9.ngrok-free.app';
       } else if (Platform.isIOS) {
         // Sử dụng ngrok URL cho thiết bị iOS khi debug
-        return 'http://localhost:3000';
+        return 'https://95a487b3043c.ngrok-free.app';
       }
     }
     // Đường dẫn production hoặc debug trên thiết bị thật
