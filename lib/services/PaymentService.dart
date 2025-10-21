@@ -77,7 +77,7 @@ class PaymentService {
         'vnp_Locale': 'vn',
         'vnp_CurrCode': 'VND',
         'vnp_TxnRef': orderCode,
-        'vnp_OrderInfo': 'testpayment', // Siêu đơn giản hóa để test
+        'vnp_OrderInfo': 'thanh toán cho đơn hàng', // Siêu đơn giản hóa để test
         'vnp_OrderType': 'other',  // Dùng 'other' theo tài liệu VNPay
         'vnp_Amount': (amount * 100).toInt().toString(),  // Nhân 100 và chuyển sang kiểu int
         'vnp_ReturnUrl': 'cinenow://payment/vnpay',
@@ -155,7 +155,7 @@ class PaymentService {
                 'vnp_ResponseCode': success ? '00' : '24',
                 'vnp_TxnRef': orderCode ?? '',
                 'vnp_Amount': (amount * 100).toString(),
-                'vnp_OrderInfo': 'testpayment', // Đồng bộ với params
+                'vnp_OrderInfo': 'thanh toán cho đơn hàng', // Đồng bộ với params
                 'vnp_PayDate': DateTime.now().toString(),
               };
               
