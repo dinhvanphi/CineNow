@@ -1,25 +1,23 @@
-import 'dart:io' show Platform;
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 
 class AppConfig {
   // API URLs
   static String get apiBaseUrl {
-    if (kDebugMode) {
-      if (Platform.isAndroid) {
-        // Sử dụng ngrok URL cho thiết bị Android khi debug
-        return 'https://a6ec30a806d5.ngrok-free.app';
-      } else if (Platform.isIOS) {
-        // Sử dụng ngrok URL cho thiết bị iOS khi debug
-        return 'https://a6ec30a806d5.ngrok-free.app';
-      }
+    // On web, Platform from dart:io is unsupported; use kIsWeb instead
+    if (kIsWeb) {
+      return 'https://829c9a86ecd6.ngrok-free.app';
     }
-    // Đường dẫn production hoặc debug trên thiết bị thật
-    return 'https://a6ec30a806d5.ngrok-free.app';
+    if (kDebugMode) {
+      // Debug base URL for non-web platforms
+      return 'https://829c9a86ecd6.ngrok-free.app';
+    }
+    // Production base URL (update when deploying)
+    return 'https://829c9a86ecd6.ngrok-free.app';
   }
   
   // URL thanh toán VNPay
-  static const String vnpayApiUrl = 'https://a6ec30a806d5.ngrok-free.app';
-  static const String vnpayReturnUrl = vnpayApiUrl + '/api/payment/vnpay/return';
+  static String get vnpayApiUrl => apiBaseUrl;
+  static String get vnpayReturnUrl => '$vnpayApiUrl/api/payment/vnpay/return';
 
   // API Endpoints
   static const String registerEndpoint = '/api/register';
