@@ -5,14 +5,14 @@ class AppConfig {
   static String get apiBaseUrl {
     // On web, Platform from dart:io is unsupported; use kIsWeb instead
     if (kIsWeb) {
-      return 'https://8bbb3e8c1923.ngrok-free.app';
+      return 'https://fe4a72bfae8b.ngrok-free.app';
     }
     if (kDebugMode) {
       // Debug base URL for non-web platforms
-      return 'https://8bbb3e8c1923.ngrok-free.app';
+      return 'https://fe4a72bfae8b.ngrok-free.app';
     }
     // Production base URL (update when deploying)
-    return 'https://8bbb3e8c1923.ngrok-free.app';
+    return 'https://fe4a72bfae8b.ngrok-free.app';
   }
   
   // URL thanh toán VNPay

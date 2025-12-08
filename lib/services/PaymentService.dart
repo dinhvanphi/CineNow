@@ -83,37 +83,46 @@ class PaymentService {
         'vnp_ReturnUrl': 'cinenow://payment/vnpay',
         'vnp_IpAddr': '127.0.0.1',
         'vnp_CreateDate': formatDateTime(now),
+        // Theo tài liệu v2.1.0 cần truyền kèm loại hash trong URL (loại HmacSHA512)
+        // Lưu ý: tham số này KHÔNG được đưa vào dữ liệu ký (hashData)
+        'vnp_SecureHashType': 'HmacSHA512',
       };
       
-      // B1: Sort và encode các tham số theo cách của mẫu NodeJS
-      // Trước tiên, sắp xếp các key
-      final List<String> sortedKeys = params.keys.toList()..sort();
+      // B1: Sort và encode các tham số
+      // Tạo danh sách key dùng để ký: loại bỏ vnp_SecureHash và vnp_SecureHashType
+      final List<String> sortedKeysForHash = params.keys
+          .where((k) => k != 'vnp_SecureHash' && k != 'vnp_SecureHashType')
+          .toList()
+        ..sort();
       
-      // Tạo ra map mới với các giá trị được encode như trong hàm sortObject của NodeJS
-      final Map<String, String> sortedParams = {};
-      for (String key in sortedKeys) {
-        String value = params[key] ?? '';
-        // Encode giá trị và thay thế %20 bằng dấu + như trong NodeJS
-        String encodedValue = Uri.encodeComponent(value).replaceAll('%20', '+');
-        sortedParams[key] = encodedValue;
-      }
+      // Và danh sách key cho URL (bao gồm cả vnp_SecureHashType, ngoại trừ vnp_SecureHash)
+      final List<String> sortedKeysForUrl = params.keys
+          .where((k) => k != 'vnp_SecureHash')
+          .toList()
+        ..sort();
       
-      // B2: Tạo chuỗi query như trong NodeJS (với tham số đã được encode)
+      // Tạo map đã encode value theo chuẩn VNPay (encodeURIComponent và thay %20 bằng +)
+      String encodeVNPayValue(String value) => Uri.encodeComponent(value).replaceAll('%20', '+');
+      final Map<String, String> encodedParams = {
+        for (final entry in params.entries) entry.key: encodeVNPayValue(entry.value)
+      };
+      
+      // B2: Tạo chuỗi hashData từ các key dùng để ký
       final StringBuffer hashData = StringBuffer();
       bool firstParam = true;
-      for (String key in sortedKeys) {
+      for (String key in sortedKeysForHash) {
         if (!firstParam) {
           hashData.write('&');
         } else {
           firstParam = false;
         }
-        hashData.write('$key=${sortedParams[key]}');
+        hashData.write('$key=${encodedParams[key]}');
       }
       
       print('=====>[RAW HASH DATA]: ${hashData.toString()}'); // Log dữ liệu trước khi hash
       
       // B3: Tạo chữ ký HMAC-SHA512 theo đúng cách VNPay yêu cầu
-      final key = utf8.encode('A1ZFTLXV6VBYC7QBF59N49OAMSBQ7CJV'); // hash secret key
+      final key = utf8.encode('X8K8BKRN83Q145KGLYIHXECIXQ6ENR99'); // hash secret key
       final bytes = utf8.encode(hashData.toString());
       final hmacSha512 = crypto.Hmac(crypto.sha512, key);
       final digest = hmacSha512.convert(bytes);
@@ -121,19 +130,19 @@ class PaymentService {
       final hash = digest.bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join('').toUpperCase();
       print('=====>[FINAL HASH]: $hash'); // Log hash cuối cùng
       
-      // B4: Tạo URL với các tham số (đã được encode trong sortedParams)
+      // B4: Tạo URL với các tham số (đã được encode trong encodedParams)
       final StringBuffer queryBuilder = StringBuffer(baseUri.toString());
       queryBuilder.write('?');
       
-      // Thêm các tham số đã được encode (dùng chính sortedParams như khi tạo hash)
+      // Thêm các tham số đã được encode (bao gồm vnp_SecureHashType)
       bool firstUrlParam = true;
-      for (String key in sortedKeys) {
+      for (String key in sortedKeysForUrl) {
         if (!firstUrlParam) {
           queryBuilder.write('&');
         } else {
           firstUrlParam = false;
         }
-        queryBuilder.write('$key=${sortedParams[key]}');
+        queryBuilder.write('$key=${encodedParams[key]}');
       }
       
       // Thêm chữ ký vào URL
