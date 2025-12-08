@@ -8,7 +8,7 @@ import 'RoomListScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:cinenow/providers/CinemaProvider.dart';
 import 'package:cinenow/providers/MovieProvider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cinema {
   final String id;
@@ -412,6 +412,22 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             if (cinemas != null && cinemas.isNotEmpty) {
               if(widget.movie.id != null){
                 Provider.of<MovieProvider>(context, listen: false).setMovieId(widget.movie.id!);
+                // Lưu thông tin phim đã chọn để QuickSaveTicket đọc ra poster và metadata
+                try {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setString(
+                    'movie_${widget.movie.id}',
+                    jsonEncode({
+                      'title': widget.movie.title,
+                      'duration': widget.movie.duration ?? '2 hours',
+                      'genres': (widget.movie.genres ?? []).join(', '),
+                      'image': widget.movie.image,
+                    }),
+                  );
+                } catch (e) {
+                  // Không chặn luồng nếu lưu thất bại
+                  debugPrint('Lỗi lưu thông tin phim: $e');
+                }
               }
               Navigator.push(
                 context,
