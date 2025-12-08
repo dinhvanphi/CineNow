@@ -9,6 +9,7 @@ import '../../providers/SeatProvider.dart';
 import '../../providers/MovieProvider.dart';
 import '../../providers/RoomProvider.dart';
 import '../../providers/ComboProvider.dart';
+import '../../services/TicketService.dart';
 
 class QuickSaveTicket extends StatefulWidget {
   final Map<String, String> paymentParams;
@@ -105,48 +106,30 @@ class _QuickSaveTicketState extends State<QuickSaveTicket> {
         purchaseDate: DateTime.now(),
       );
       
-      // Lưu vé
-      final prefs = await SharedPreferences.getInstance();
-      
-      // Lấy danh sách vé hiện có
-      List<String> ticketJsonList = prefs.getStringList('tickets') ?? [];
-      
-      // Kiểm tra xem vé đã tồn tại chưa
-      bool ticketExists = false;
-      for (var ticketJson in ticketJsonList) {
-        final existingTicket = Ticket.fromJson(jsonDecode(ticketJson));
-        if (existingTicket.id == ticket.id) {
-          ticketExists = true;
-          break;
+      // Lưu vé theo chuẩn TicketService để MyTicketScreen đọc được
+      final ticketService = TicketService();
+      final saved = await ticketService.saveTicket(ticket);
+
+      // Lưu thông tin combos (nếu có) kèm theo orderId để tra cứu sau
+      if (comboProvider.selectedCombos.isNotEmpty) {
+        try {
+          final prefs = await SharedPreferences.getInstance();
+          final comboList = comboProvider.selectedCombos.map((combo) => {
+            'id': combo.id,
+            'name': combo.name,
+            'price': combo.price,
+            'quantity': combo.quantity,
+          }).toList();
+          await prefs.setString('combos_$orderId', jsonEncode(comboList));
+        } catch (e) {
+          print('Lỗi khi lưu thông tin combo: $e');
         }
       }
-      
-      // Nếu vé chưa tồn tại, thêm vào danh sách
-      if (!ticketExists) {
-        ticketJsonList.add(jsonEncode(ticket.toJson()));
-        await prefs.setStringList('tickets', ticketJsonList);
-        
-        // Lưu thông tin combos nếu có
-        if (comboProvider.selectedCombos.isNotEmpty) {
-          try {
-            // Chuyển đổi Combo objects sang dạng Map đơn giản
-            final comboList = comboProvider.selectedCombos.map((combo) => {
-              'id': combo.id,
-              'name': combo.name, 
-              'price': combo.price,
-              'quantity': combo.quantity,
-            }).toList();
-            
-            await prefs.setString('combos_$orderId', jsonEncode(comboList));
-          } catch (e) {
-            print('Lỗi khi lưu thông tin combo: $e');
-            // Lỗi khi lưu combo không ảnh hưởng đến việc lưu vé
-          }
-        }
-        
-        print("QUICK SAVE: Đã lưu vé thành công");
+
+      if (saved) {
+        print("QUICK SAVE: Đã lưu vé thành công qua TicketService");
       } else {
-        print("QUICK SAVE: Vé đã tồn tại, không lưu lại");
+        print("QUICK SAVE: Lưu vé thất bại qua TicketService");
       }
       
       setState(() {
