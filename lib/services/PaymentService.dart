@@ -8,6 +8,7 @@ import 'package:vnpay_flutter/vnpay_flutter.dart';
 import 'package:crypto/crypto.dart' as crypto;
 import '../config/AppConfig.dart';
 import '../screens/payment/VNPayWebView.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PaymentService {
   final String baseUrl = AppConfig.apiBaseUrl;
@@ -122,7 +123,8 @@ class PaymentService {
       print('=====>[RAW HASH DATA]: ${hashData.toString()}'); // Log dữ liệu trước khi hash
       
       // B3: Tạo chữ ký HMAC-SHA512 theo đúng cách VNPay yêu cầu
-      final key = utf8.encode('X8K8BKRN83Q145KGLYIHXECIXQ6ENR99'); // hash secret key
+      final String secret = dotenv.env['VNPAY_HASH_SECRET'] ?? '';
+      final key = utf8.encode(secret);
       final bytes = utf8.encode(hashData.toString());
       final hmacSha512 = crypto.Hmac(crypto.sha512, key);
       final digest = hmacSha512.convert(bytes);

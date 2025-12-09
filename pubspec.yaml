@@ -38,6 +38,7 @@ dependencies:
   http: ^1.3.0
   webview_flutter: ^4.2.4 
   vnpay_flutter: ^1.0.3
+  flutter_dotenv: ^5.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
