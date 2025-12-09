@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/date_symbol_data_local.dart'; // Thêm import này
+import 'package:intl/date_symbol_data_local.dart'; 
 import 'providers/SeatProvider.dart';
-import 'providers/UserProvider.dart'; // Thêm import này
+import 'providers/UserProvider.dart'; 
 import 'IntroView.dart';
 import 'providers/CinemaProvider.dart';
 import 'providers/MovieProvider.dart';
@@ -14,9 +14,11 @@ import 'screens/payment/PaymentResultScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'dart:async';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  // Khởi tạo dữ liệu địa phương
+ 
+  await dotenv.load(fileName: ".env");
   await initializeDateFormatting('vi', null);
 
   runApp(
